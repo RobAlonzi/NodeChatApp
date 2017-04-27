@@ -9,9 +9,9 @@ socket.on("disconnect", function() {
 
 
 socket.on("newMessage", function(message){
-	console.log("Got New Message", message);
+	let formattedTime = moment(message.createdAt).format("h:mm a");
 	let li = document.createElement("li");
-	li.innerHTML = `${message.from}: ${message.text}`;
+	li.innerHTML = `${message.from} ${formattedTime}: ${message.text}`;
 	document.getElementById("messages").appendChild(li);
 });
 
@@ -23,7 +23,8 @@ socket.on("newLocationMessage", function(message){
 
 
 	let li = document.createElement("li");
-	li.innerHTML = `${message.from}: `;
+	let formattedTime = moment(message.createdAt).format("h:mm a");
+	li.innerHTML = `${message.from} ${formattedTime}: `;
 	li.appendChild(a);
 
 	document.getElementById("messages").appendChild(li);
