@@ -20,13 +20,36 @@ function scrollToBottom(){
 
 
 socket.on("connect", function() {
-	console.log("Connected to server");
+	let params = deparam(window.location.search);
+	socket.emit("join", params, function(err){
+		if(err){
+			alert(err);
+			window.location.href = "/";
+		}else{
+			console.log("no error");
+		}
+	});
 });
 
 socket.on("disconnect", function() {
 	console.log("Disconnected from server");
 });
 
+socket.on("updateUserList", function(users) {
+	let usersEl = document.getElementById("users");
+	let ol = document.createElement("ol");
+
+	users.forEach(function(user){
+		let li = document.createElement("li");
+		li.innerHTML = user;
+		ol.appendChild(li);
+	});
+
+	if(usersEl.firstChild)
+		usersEl.removeChild(usersEl.firstChild);
+		
+	usersEl.appendChild(ol);
+});
 
 socket.on("newMessage", function(message){
 	let formattedTime = moment(message.createdAt).format("h:mm a");
