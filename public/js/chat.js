@@ -47,7 +47,7 @@ socket.on("updateUserList", function(users) {
 
 	if(usersEl.firstChild)
 		usersEl.removeChild(usersEl.firstChild);
-		
+
 	usersEl.appendChild(ol);
 });
 
@@ -84,7 +84,6 @@ messageForm.addEventListener("submit", function(e){
 	let messageTextbox = messageForm.querySelector('input[name="message"]');
 
 	socket.emit("createMessage", {
-		from:"User",
 		text: messageTextbox.value
 	}, function() {
 		messageTextbox.value = "";
